@@ -8,7 +8,7 @@
 		<version>3.5.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.controlefinanceiro</groupId>
+	<groupId>com.controledefinancas</groupId>
 	<artifactId>AplicacaoFinancas</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Aplicacao de Financas Pessoais</name>
