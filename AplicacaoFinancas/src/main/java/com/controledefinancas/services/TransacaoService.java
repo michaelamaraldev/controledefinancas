@@ -23,19 +23,19 @@ public class TransacaoService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado."));
 
-        if (tipo.equalsIgnoreCase("despesa")) { // 'type' para 'tipo', 'expense' para 'despesa'
-            user.setSaldo(user.getSaldo() - valor); // 'setBalance' para 'setSaldo', 'getBalance' para 'getSaldo', 'amount' para 'valor'
-        } else if (tipo.equalsIgnoreCase("receita")) { // 'income' para 'receita'
-            user.setSaldo(user.getSaldo() + valor); // 'setBalance' para 'setSaldo', 'getBalance' para 'getSaldo', 'amount' para 'valor'
+        if (tipo.equalsIgnoreCase("despesa")) {
+            user.setSaldo(user.getSaldo() - valor);
+        } else if (tipo.equalsIgnoreCase("receita")) { 
+            user.setSaldo(user.getSaldo() + valor);
         }
         userRepository.save(user);
 
         Transacao transacao = new Transacao();
         transacao.setUser(user);
-        transacao.setTipo(tipo); // 'setType' para 'setTipo'
-        transacao.setValor(valor); // 'setAmount' para 'setValor'
-        transacao.setCategoria(categoria); // 'setCategory' para 'setCategoria'
-        transacao.setData(LocalDateTime.now()); // 'setDate' para 'setData'
+        transacao.setTipo(tipo);
+        transacao.setValor(valor);
+        transacao.setCategoria(categoria);
+        transacao.setData(LocalDateTime.now());
 
         return transacaoRepository.save(transacao);
     }
@@ -45,18 +45,18 @@ public class TransacaoService {
     }
 
     public Map<String, Double> getSummary(Long userId) {
-        List<Transacao> transacoes = getUserTransactions(userId); // 'transactions' para 'transacoes'
-        double receitaTotal = 0, despesaTotal = 0; // 'income' para 'receitaTotal', 'expense' para 'despesaTotal'
+        List<Transacao> transacoes = getUserTransactions(userId);
+        double receitaTotal = 0, despesaTotal = 0;
 
         for (Transacao t : transacoes) {
-            if (t.getTipo().equalsIgnoreCase("receita")) receitaTotal += t.getValor(); // 'getType' para 'getTipo', 'income' para 'receita', 'getAmount' para 'getValor'
-            else despesaTotal += t.getValor(); // 'expense' para 'despesa', 'getAmount' para 'getValor'
+            if (t.getTipo().equalsIgnoreCase("receita")) receitaTotal += t.getValor(); 
+            else despesaTotal += t.getValor();
         }
 
-        double saldoAtual = receitaTotal - despesaTotal; // 'balance' para 'saldoAtual'
+        double saldoAtual = receitaTotal - despesaTotal;
 
-        Map<String, Double> resumo = new HashMap<>(); // 'summary' para 'resumo'
-        resumo.put("receita", receitaTotal); // Chaves do mapa também em português
+        Map<String, Double> resumo = new HashMap<>();
+        resumo.put("receita", receitaTotal);
         resumo.put("despesa", despesaTotal);
         resumo.put("saldo", saldoAtual);
 
